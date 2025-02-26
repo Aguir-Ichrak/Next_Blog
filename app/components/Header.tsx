@@ -1,28 +1,32 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const router = useRouter();
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/auth/sign-in");
   };
-  return (
-    <div className=" absolute w-full bg-[#181E2A]">
-      <header className=" text-white px-6 py-4 md:px-8 lg:px-12 flex justify-between items-center rounded-lg border border-[rgba(50,65,77,0.72)] mx-4 mt-4">
 
+  return (
+    <div className="absolute w-full bg-[#181E2A]">
+      <header className="text-white px-6 py-4 md:px-8 lg:px-12 flex justify-between items-center rounded-lg border border-[rgba(50,65,77,0.72)] mx-4 mt-4">
         <div className="flex items-center">
-          <div className="relative w-12 h-8">
+          <div
+            className="relative w-12 h-8"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
             <Image
               src="/assets/images/logo.png"
               width={30}
@@ -33,24 +37,47 @@ const Header = () => {
               className="m-auto"
             />
           </div>
-          <Link href="/" className="text-2xl font-bold">
+          <div
+            className="text-2xl font-bold"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
             ElepziaBlog
-          </Link>
+          </div>
         </div>
 
         <nav className="hidden md:flex space-x-6">
-          <Link href="/" className="hover:text-gray-300">
+          <div
+            className="hover:text-gray-300"
+            aria-label="home"
+            role="link"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
             Home
-          </Link>
-          <Link href="/blog/create-blog" className="hover:text-gray-300">
+          </div>
+          <div
+            className="hover:text-gray-300"
+            aria-label="create"
+            role="link"
+            onClick={() => {
+              router.push("/blog/create-blog");
+            }}
+          >
             Add Blog
-          </Link>
+          </div>
         </nav>
 
         <div className="hidden md:flex items-center space-x-5">
-          <Link
-            href="/auth/profile"
+          <div
             className="flex items-center bg-gray-700 rounded-full w-8 h-8 "
+            aria-label="profile"
+            role="link"
+            onClick={() => {
+              router.push("/auth/profile");
+            }}
           >
             <Image
               src="/assets/icons/user.svg"
@@ -61,8 +88,10 @@ const Header = () => {
               objectFit="cover"
               className="m-auto"
             />
-          </Link>
+          </div>
           <div
+            role="btn"
+            aria-label="logout"
             className="text-white hover:text-gray-300"
             onClick={handleLogout}
           >
@@ -79,7 +108,7 @@ const Header = () => {
         </div>
 
         <div className="md:hidden flex items-center">
-          <button onClick={toggleMobileMenu}>
+          <button onClick={toggleMobileMenu} aria-expanded={isMobileMenuOpen} role="btnmenu">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -99,18 +128,38 @@ const Header = () => {
 
         {isMobileMenuOpen && (
           <div className="md:hidden bg-[#181E2A] absolute top-16 left-1 w-full py-4 px-6 rounded-lg m-4 border-2 border-[rgba(50,65,77,0.72)]">
-            <nav className="flex flex-col space-y-4">
-              <Link href="/" className="hover:text-gray-300">
+            <nav
+              className="flex flex-col space-y-4"
+              role="navigation"
+              aria-label="Mobile Menu"
+            >
+              <div
+                className="hover:text-gray-300"
+                aria-label="home"
+                role="link"
+                onClick={() => {
+                  router.push("/");
+                }}
+              >
                 Home
-              </Link>
-              <Link href="/blog/add-blog" className="hover:text-gray-300">
+              </div>
+              <div
+                className="hover:text-gray-300"
+                aria-label="create"
+                role="link"
+                onClick={() => {
+                  router.push("/blog/create-blog");
+                }}
+              >
                 Add Blog
-              </Link>
-
-
-              <Link
-                href="/auth/profile"
+              </div>
+              <div
                 className="flex items-center bg-gray-700 rounded-full w-8 h-8 "
+                aria-label="profile"
+                role="link"
+                onClick={() => {
+                  router.push("/auth/profile");
+                }}
               >
                 <Image
                   src="/assets/icons/user.svg"
@@ -121,10 +170,12 @@ const Header = () => {
                   objectFit="cover"
                   className="m-auto"
                 />
-              </Link>
+              </div>
               <div
+                role="btn"
                 className="text-white hover:text-gray-300"
                 onClick={handleLogout}
+                aria-label="logout"
               >
                 <Image
                   src="/assets/icons/logout.svg"
@@ -144,4 +195,5 @@ const Header = () => {
   );
 };
 
+Header.displayName = "Header";
 export default Header;
