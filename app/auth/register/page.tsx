@@ -72,14 +72,15 @@ const SignupForm = () => {
       }, 2000);
     } catch (err) {
       console.error(err);
-    
+
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || "Something went wrong.");
       } else if (err instanceof Error) {
         setError(err.message);
       } else {
         setError("Something went wrong.");
-      }   } finally {
+      }
+    } finally {
       setLoading(false);
     }
   };
@@ -147,6 +148,7 @@ const SignupForm = () => {
               </label>
               <input
                 type="password"
+                data-testid="password"
                 id="password"
                 name="password"
                 value={password}
@@ -164,6 +166,7 @@ const SignupForm = () => {
                 Confirm Password
               </label>
               <input
+                data-testid="confirmpassword"
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
@@ -197,6 +200,7 @@ const SignupForm = () => {
               type="submit"
               className="bg-[#181E2A] hover:bg-[rgba(50,65,77,0.72)] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
               disabled={loading}
+              role="button"
             >
               {loading ? "Signing up..." : "Signup"}
             </button>
