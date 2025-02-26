@@ -1,6 +1,5 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
@@ -35,10 +34,9 @@ export default function RootLayoutClient({ children }: RootLayoutProps) {
   const isAuthPage = pathname === "/auth/sign-in" || pathname === "/auth/register";
 
   return (
-    <SessionProvider>
+    <div>
       {!isAuthPage && isAuthenticated && <Header />}
       <main className="bg-[#181E2A]">{children}</main>
-      {!isAuthPage && isAuthenticated && <Footer />}
-    </SessionProvider>
+      {!isAuthPage && isAuthenticated && <Footer />}</div>
   );
 }
