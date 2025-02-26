@@ -70,11 +70,10 @@ const HomePage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {blogs.map((blog) => (
             <div
-              key={blog.id}
+              key={blog._id}
               className="bg-[rgba(50,65,77,0.72)] rounded-lg p-4"
             >
-
-              <Link href={`/blog/${blog.id}`}>
+              <Link href={`/blog/${blog._id}`}>   
                 <Image
                   src={blog.image}
                   alt={blog.title}
