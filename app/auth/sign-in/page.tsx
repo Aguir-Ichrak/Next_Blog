@@ -33,16 +33,16 @@ const LoginPage = () => {
         email,
         password,
       });
-      
-localStorage.setItem("token", response.data.token);
+
+      localStorage.setItem("token", response.data.token);
 
       setSuccess("Login successful!");
       setTimeout(() => {
         router.push("/");
       }, 2000);
-
-    } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong.");
+    } catch (err: unknown) {
+      const axiosError = err as { response: { data: { message: string } } }; // Assert the type
+      setError(axiosError.response?.data?.message || "Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -56,7 +56,9 @@ localStorage.setItem("token", response.data.token);
           <p className="text-gray-400 mb-8">Enter your account details</p>
 
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-          {success && <p className="text-green-500 text-center mb-4">{success}</p>}
+          {success && (
+            <p className="text-green-500 text-center mb-4">{success}</p>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -109,7 +111,10 @@ localStorage.setItem("token", response.data.token);
           <div className="mt-8 text-center">
             <p className="text-gray-400">
               Don&apos;t have an account?
-              <Link href="/signup" className="text-white hover:text-blue-400">
+              <Link
+                href="/auth/register"
+                className="text-white hover:text-blue-400"
+              >
                 Sign Up
               </Link>
             </p>
